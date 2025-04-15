@@ -1,0 +1,2187 @@
+#Welcome/Start section
+#Todo list
+    #Add A Potion For the shapeshifter that applies poison to the opponent (shapeshifter Buffing)
+    
+#Python Imports
+import random
+import sys,time
+from tkinter import *
+
+#You will have to switch to tkinter python graphics if you want to see the game title or select: "Display Graphics Screen"
+#Tkinter graphics import
+
+root = Tk()
+screen = Canvas(root, width =400, height = 200, bg = "Grey")
+screen.pack()
+screen.create_text(200, 75, text="Battle Simulator", fill="black", font=("Helvetica 30 bold underline"))
+screen.create_text(200, 150, text="Game", fill="black", font=('Helvetica 30 bold underline'))
+screen.pack()       
+
+#Enabling Pets Section
+print("Welcome to battle!")
+Pets_enable = input("Do you want to enable pets for this game?(Yes/No): ")
+player_1_pet = ""
+player_1_pet_health = 0
+player_1_pet_damage = 0
+player_2_pet = ""
+player_2_pet_health = 0
+player_2_pet_damage = 0
+player_1_pet_food = 20
+player_2_pet_food = 20
+Rules = input("Would you like to know background on the game?(Yes/No): ")
+
+player_1_name = ""
+player_2_name = ""
+
+name_when_win = input("Do you want your name to be displayed when you win?(Yes/No): ")
+if name_when_win == "Yes":
+    print("")
+    player_1_name = input("What is your name Player 1?: ")
+    player_2_name = input("What is your name Player 2?: ")
+    print("")
+else:
+    player_1_name = "Player 1"
+    player_2_name = "Player 2"
+
+#For some reason you cannot display your name on a win and have typewriting text on at the same time
+typewriting = input("Do you want Typwriting Words?(Yes/No): ")
+if typewriting == "Yes":
+    print("")
+    speed = input("How fast do you want text text to show up?(Slow/Normal/Fast): ")
+    #The following code (till line # 80) is edited sample(s) from "Ahmed" on Stack Overflow commented on Feb 1, 2019 at 4:28
+    if speed == "Slow":
+        def d():
+            time.sleep(.25)
+            
+        def print(str):
+            for c in str + '\n':
+                sys.stdout.write(c)
+                sys.stdout.flush()
+                time.sleep(.075)
+            d()
+    elif speed == "Fast":
+        def d():
+            time.sleep(.075)
+            
+        def print(str):
+            for c in str + '\n':
+                sys.stdout.write(c)
+                sys.stdout.flush()
+                time.sleep(.025)
+            d()
+    else:
+        def d():
+            time.sleep(.1)
+            
+        def print(str):
+            for c in str + '\n':
+                sys.stdout.write(c)
+                sys.stdout.flush()
+                time.sleep(.05)
+            d()
+
+if Rules == "Yes":
+    print("")
+    print("----------------------------------------")
+    print("")
+    print("Welcome to Battle Simulator Game!")
+    print("-I hope this helps you a lot (For comprehension)")
+    print("")
+    print("Background Information/Goal of BSG:")
+    print("-BSG is a simple game in which two players compete against each other by defeat with specific moves and attacks. It's that simple! You can attack, dodge, buy, tame pets, and do so much more in this classy game (typewriter text). ")
+    print("")
+    print("(For more information, Head to: https://shorturl.at/ngKpZ)")
+    print("")
+    print("----------------------------------------")
+
+elif Rules == "Owner Passkey":
+    print("")
+    OP = input("Enter Owner Passkey(If You Know It): ")
+    if OP == "kZ511":
+        print("")
+        print("----------------------------------------")
+        print("")
+        print("Updates Since Last Re-nameing:")
+        print("")
+        print("-Sleep/time per line and typing print statments update")
+        print("-Pet shop mini update")
+        print("-Owner Passkey Extra Info")
+        print("-Dragon pet finish minus water + minor bug fixes/tweaks")
+        print("-Combat/Attack system dodgeing % update + visual Hp tweaks")
+        print("-Water Bucket System to put out fire from dragon + -Bug Fixes-")
+        print("-Updated Info/Data dysplay (Outside sources)")
+        print("-Pet Tick damage fix (no damage while tick damage active)")
+        print("-Pet Shop fix (Cannot buy pets and go into debt)")
+        print("-Added cow pet and farmer character (specifically for pet mode)")
+        print("-Added pawnbroker character")
+        print("-Custom Win Messages")
+        print("-c character to quickly get 1 everything (for bug testing)")
+        print("-Selling items")
+        print("-xxxxxxxxx")
+        print("-xxxxxxxxx")
+        print("")
+        print("----------------------------------------")
+
+print("")
+print("Lets Start The Game!")
+print("")
+print("You can choose any of the characters below:")
+print("")
+print("-Townsman")
+print("-Wizard")
+if Pets_enable == "Yes":
+    print("-Farmer")
+print("-Orc")
+print("-Goblin")
+print("-Pawnbroker")
+print("-Skeleton")
+print("-Bandit")
+print("-Shapeshifter")
+print("-Random")
+print("-Custom")
+print("")
+
+player_1 = input("Player 1 choose your character: ")
+player_2 = input("Player 2 choose your character: ")
+print("")
+print("----------------------------------------")
+print("")
+
+#Magic points
+player_1_mp = 100
+player_2_mp = 100
+
+#Items
+player_1_item = ""
+player_2_item = ""
+
+#Pet Stats
+
+#Dog
+dog_hp = 18
+dog_damage = 13
+
+#Cow
+cow_hp = 18
+cow_damage = 15
+
+#Rat
+rat_hp = 15
+rat_damage = 10
+
+#Rat Poison
+rat_poison_player_1 = 3
+rat_poison_enabled_player_1 = False
+
+rat_poison_player_2 = 3
+rat_poison_enabled_player_2 = False
+
+rat_poison_per_round = 4
+
+#Fire Dragon
+fire_dragon_hp = 27
+fire_dragon_damage = 16
+'''
+Fire Dragon poison Goes Here
+Dat stands for Dragon A<->Ttack
+Also I was lazy to change the name when I had a working rat poison system I can copy + paste
+'''
+dat_poison_player_1 = 5
+dat_poison_enabled_player_1 = False
+
+dat_poison_player_2 = 5
+dat_poison_enabled_player_2 = False
+
+dat_poison_per_round = 7
+
+#Character stats
+
+#Wizard
+m_hp = 50
+m_speed = 20
+m_damage = 16
+
+#Orc
+o_hp = 73
+o_speed = 20
+o_damage = 18
+
+#Goblin
+g_hp = 37
+g_speed = 85
+g_damage = 8
+
+#Pawnbroker
+p_hp = 40
+p_speed = 50
+p_damage = 10
+
+#Skeleton
+s_hp = 36
+s_speed = 27
+s_damage = 36
+
+#Bandit
+b_hp = 40
+b_speed = 36
+b_damage = 14
+
+#Shapeshifter
+ss_hp = 60
+ss_speed = 29
+ss_damage = 9
+
+#Townsman
+t_hp = 45
+t_speed = 40
+t_damage = 10
+
+#Farmer
+f_hp = 50
+f_speed = 50
+f_damage = 8
+
+#Random Player 1
+r_hp = random.randint(1, 100)
+r_speed = random.randint(1, 100)
+r_damage = random.randint(1, 100)
+
+#Random Player 2
+r_hp_2 = random.randint(1, 100)
+r_speed_2 = random.randint(1, 100)
+r_damage_2 = random.randint(1, 100)
+
+#Player/Character atributes
+
+print("Player 1 stats:")
+if player_1 == "Wizard":
+    print("HP: " + str(m_hp))
+    print("Speed: " +str(m_speed))
+    print("Damage: " +str(m_damage))
+    player_1_health = 50
+    player_1_speed = 20
+    player_1_damage = 16
+if player_1 == "Farmer":
+    if Pets_enable == "Yes":
+        print("HP: " + str(f_hp))
+        print("Speed: " +str(f_speed))
+        print("Damage: " +str(f_damage))
+        player_1_health = 50
+        player_1_speed = 50
+        player_1_damage = 8
+        player_1_pet = "Cow"
+        print("Pet: " +player_1_pet)
+        player_1_pet_food = 40
+    else:
+        print("Character changed to skeleton because you cannot use farmer without pets")
+        print("Hp: " +str(s_hp))
+        print("Speed: " +str(s_speed))
+        print("Damage: " +str(s_damage))
+        player_1_health = 36
+        player_1_speed = 27
+        player_1_damage = 36
+elif player_1 == "Shapeshifter":
+    print("HP: " +str(ss_hp))
+    print("Speed: " +str(ss_speed))
+    print("Damage: " +str(ss_damage))
+    player_1_health = 60
+    player_1_speed = 29
+    player_1_damage = 9
+elif player_1 == "Bandit":
+    print("HP: " +str(b_hp))
+    print("Speed: " +str(b_speed))
+    print("Damage: " +str(b_damage))
+    player_1_health = 40
+    player_1_speed = 36
+    player_1_damage = 14
+elif player_1 == "Pawnbroker":
+    print("HP: " +str(p_hp))
+    print("Speed: " +str(p_speed))
+    print("Damage: " +str(p_damage))
+    player_1_health = 40
+    player_1_speed = 50
+    player_1_damage = 10
+    player_1_mp = 130
+elif player_1 == "Orc":
+    print("HP: " +str(o_hp))
+    print("Speed: " + str(o_speed))
+    print("Damage: " +str(o_damage))
+    player_1_health = 73
+    player_1_speed = 15
+    player_1_damage = 18
+elif player_1 == "Goblin":
+    print("HP: " +str(g_hp))
+    print("Speed: " +str(g_speed))
+    print("Damage: " +str(g_damage))
+    player_1_health = 37
+    player_1_speed = 85
+    player_1_damage = 9
+elif player_1 == "Skeleton":
+    print("Hp: " +str(s_hp))
+    print("Speed: " +str(s_speed))
+    print("Damage: " +str(s_damage))
+    player_1_health = 36
+    player_1_speed = 27
+    player_1_damage = 36
+elif player_1 == "Random":
+    print("Hp: " +str(r_hp))
+    print("Speed: " +str(r_speed))
+    print("Damage: " +str(r_damage))
+    player_1_health = r_hp
+    player_1_speed = r_speed
+    player_1_damage = r_damage
+elif player_1 == "Custom":
+    player_1_health = int(input("What would you like your HP to be?: "))
+    player_1_speed = int(input("What would you like your Speed to be?: "))
+    player_1_damage = int(input("What would you like your Damage to be?: "))
+elif player_1 == "Townsman":
+    print("Hp: " +str(t_hp))
+    print("Speed: " +str(t_speed))
+    print("Damage: " +str(t_damage ))
+    player_1_health = 45
+    player_1_speed = 40
+    player_1_damage = 10
+    player_1_item = "Rock"
+elif player_1 == "c":
+    print("Hp: 1")
+    print("Speed: 1")
+    print("Damage: 1")
+    player_1_health = 1
+    player_1_speed = 1
+    player_1_damage = 1
+
+print("")
+
+print("Player 2 stats:")
+if player_2 == "Wizard":
+    print("HP: " +str(m_hp))
+    print("Speed: " +str(m_speed))
+    print("Damage: " +str(m_damage))
+    player_2_health = 50
+    player_2_speed = 20
+    player_2_damage = 16
+if player_2 == "Farmer":
+    if Pets_enable == "Yes":
+        print("HP: " + str(f_hp))
+        print("Speed: " +str(f_speed))
+        print("Damage: " +str(f_damage))
+        player_2_health = 50
+        player_2_speed = 50
+        player_2_damage = 8
+        player_2_pet = "Cow"
+        print("Pet: " +player_2_pet)
+        player_2_pet_food = 40
+    else:
+        print("Character changed to skeleton because you cannot use farmer without pets")
+        print("Hp: " +str(s_hp))
+        print("Speed: " +str(s_speed))
+        print("Damage: " +str(s_damage))
+        player_2_health = 36
+        player_2_speed = 27
+        player_2_damage = 36
+elif player_2 == "Shapeshifter":
+    print("HP: " +str(ss_hp))
+    print("Speed: " +str(ss_speed))
+    print("Damage: " +str(ss_damage))
+    player_2_health = 60
+    player_2_speed = 29
+    player_2_damage = 9
+elif player_2 == "Bandit":
+    print("Hp: " +str(b_hp))
+    print("Speed: " +str(b_speed))
+    print("Damage: " +str(b_damage))
+    player_2_health = 40
+    player_2_speed = 36
+    player_2_damage = 14
+elif player_2 == "Pawnbroker":
+    print("HP: " +str(p_hp))
+    print("Speed: " +str(p_speed))
+    print("Damage: " +str(p_damage))
+    player_2_health = 40
+    player_2_speed = 50
+    player_2_damage = 10
+    player_2_mp = 130
+elif player_2 == "Orc":
+    print("HP: " +str(o_hp))
+    print("Speed: " +str(o_speed))
+    print("Damage: " + str(o_damage))
+    player_2_health = 73
+    player_2_speed = 15
+    player_2_damage = 18
+elif player_2 == "Goblin":
+    print("HP: " +str(g_hp))
+    print("Speed: " + str(g_speed))
+    print("Damage: " + str(g_damage))
+    player_2_health = 37
+    player_2_speed = 85
+    player_2_damage = 9
+elif player_2 == "Skeleton":
+    print("Hp: " +str(s_hp))
+    print("Speed: " +str(s_speed))
+    print("Damage: " +str(s_damage))
+    player_2_health = 36
+    player_2_speed = 27
+    player_2_damage = 36
+elif player_2 == "Random":
+    print("Hp: " +str(r_hp_2))
+    print("Speed: " +str(r_speed_2))
+    print("Damage: " +str(r_damage_2))
+    player_2_health = r_hp_2
+    player_2_speed = r_speed_2
+    player_2_damage = r_damage_2
+elif player_2 == "Custom":
+    player_2_health = int(input("What would you like your Hp to be?: "))
+    player_2_speed = int(input("What would you like your Speed to be?: "))
+    player_2_damage = int(input("What would you like your Damage to be?: "))
+elif player_2 == "Townsman":
+    print("Hp: " +str(t_hp))
+    print("Speed: " +str(t_speed))
+    print("Damage: " +str(t_damage))
+    player_2_health = 45
+    player_2_speed = 40
+    player_2_damage = 10
+    player_2_item = "Rock"
+elif player_2 == "c":
+    print("Hp: 1")
+    print("Speed: 1")
+    print("Damage: 1")
+    player_2_health = 1
+    player_2_speed = 1
+    player_2_damage = 1
+    
+#Display Magic Points
+print("")
+print("Player 1 Mp: " +str(player_1_mp))
+print("Player 2 MP: " +str(player_2_mp))
+
+#Rock Round Counter
+rrc1 = 0
+rrc2 = 0
+
+#Item round counters
+item_counter_1 = 0
+item_counter_2 = 0
+
+#This is to keep track of rounds
+round_number = 1
+
+print("")
+print("----------------------------------------")
+print("")
+
+#While loop to repeat attacks
+game_over = True
+
+#Start Of Game 
+while game_over:
+    
+    #item round counter
+    if player_1_item != "":
+        item_counter_1 = item_counter_1 +1
+    if player_2_item != "":
+        item_counter_2 = item_counter_2 +1
+    
+#Player 1's turn
+
+    option1_1 = "Attack"
+    option1_2 = "Heal"
+    option1_3 = "Magic"
+    option1_4 = "Steal"
+    option1_5 = "Throw Rock"
+    option1_6 = "Pet Attack"
+    option1_7 = "Attack Pet"
+    option1_8 = "Use Water"
+    option1_9 = "Sell Item"
+    
+    p1ogh = player_1_health
+    p1ogs = player_1_speed
+    p1ogd = player_1_damage
+    p1ogc = player_1
+    
+    if player_1 == "Shapeshifter" and player_1_mp >= 40:
+        ss1 = input("Do you want to shapeshift into Player 2's character for this turn?(40MP)(Yes/No): ") 
+        if ss1 == "Yes":
+            print("You are now a " +(player_2)+ " for this turn!")
+            print("")
+            player_1_health = player_2_health
+            player_1_speed = player_2_speed
+            player_1_damage = player_2_damage
+            player_1_mp = player_1_mp - 40
+            player_1 = player_2
+            role_1 = random.randint(1,3)
+            if role_1 == 1:
+                print("Shapeshifting Falure! Some of your muscle tissue decayed! (HP - 5)")
+                p1ogh = p1ogh - 5
+                p1ogs = p1ogs - 5
+                print("")
+            else:
+                print("Shapeshifting Success!")
+                p1ogs = p1ogs - 5
+                print("")
+
+    print("Player 1 turn (type an option):")
+    print("")
+
+    print(option1_1)
+    print(option1_2)
+    print(option1_3)
+    if player_1 == "Bandit":
+        print(option1_4)
+    if player_1_item == "Rock":
+        print(option1_5)
+    if player_1_pet != "":
+        print(option1_6)
+    if player_2_pet != "":
+        print(option1_7)
+    if player_1_item == "Water Bucket" and dat_poison_enabled_player_1 == True:
+        print(option1_8)
+    if player_1_item != "" and item_counter_1 >= 3:
+        print(option1_9)
+    print("")
+    
+    player_1_move = input("Move: ")
+    print("")
+    
+    if player_1_move == "Attack":
+  #Attacking/Kicking
+        if player_1_item == "Magical Boots" and player_1_speed >= 15:
+            player_1_move = input("Do you want to Kick or Attack?: ")
+            if player_1_move == "Kick":
+                role_1 = random.randint(1, 4)
+                if role_1 == 1:
+                    print("You hit Player 2!")
+                    player_2_health = player_2_health - player_1_damage * 1.22
+                    player_1_speed = player_1_speed - 15
+                elif role_1 == 2:
+                    print("You nipped Player 2!")
+                    player_2_health = player_2_health - player_1_damage
+                    player_1_speed = player_1_speed - 15
+                #This repeats to give a higher chance to hit them
+                elif role_1 == 3:
+                    print("You hit Player 2!")
+                    player_2_health = player_2_health - player_1_damage * 1.22
+                    player_1_speed = player_1_speed - 15
+                else:
+                    print("You missed Player 2!")
+                    player_1_speed = player_1_speed - 7.5
+
+            #Add Normal Attack If Player 1 Does Not Want To Kick
+            else:
+                player_2_dodge = input("Player 2: Player 1 just attacked you, do you want to spend some speed to dodge it?(Yes/No): ")
+                print("")
+                
+                if player_2_dodge == "Yes":
+                    
+                    if player_2_speed - player_1_speed <= 20:
+                        
+                        role_1 = random.randint(1, 4)
+                        
+                        if role_1 == 1:
+                            print("You just dodged Player 1's attack, congrats!")
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                        elif role_1 == 2:
+                            player_2_health = player_2_health - player_1_damage
+                            print("Player 2 just lost health. They are down to " +str(player_2_health))
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                        else:
+                            player_2_health = player_2_health - player_1_damage
+                            print("Player 2 just lost health. They are down to " +str(player_2_health))
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                    else:
+                        
+                        role_1 = random.randint(1, 6)
+                        
+                        if role_1 == 1 or 2:
+                            print("You still got hit barely!")
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                            player_2_health = player_2_health - player_1_damage
+                        
+                        else:
+                            print("You dodged Player 1's attack!")
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                else:
+                    player_2_health = player_2_health - player_1_damage
+                    player_1_speed = player_1_speed - 5
+                    print("Player 2 just lost health. they are down to " +str(player_2_health))
+
+        else:
+ 
+            player_2_dodge = input("Player 2: Player 1 just attacked you, Do you want to spend some speed to dodge it?(Yes/No): ")
+            print("")
+                
+            if player_2_dodge == "Yes":
+                        
+                if player_2_speed - player_1_speed <= 20:
+                        
+                    role_1 = random.randint(1, 4)
+                            
+                    if role_1 == 1:
+                        print("You just dodged Player 1's attack, congrats!")
+                        player_1_speed = player_1_speed - 5
+                        payer_2_speed = player_2_speed - 5
+                    elif role_1 == 2:
+                        player_2_health = player_2_health - player_1_damage
+                        print("Player 2 just lost health. They are down to " +str(player_2_health))
+                        player_1_speed = player_1_speed - 5
+                        player_2_speed = player_2_speed - 5
+                    else:
+                        player_2_health = player_2_health - player_1_damage
+                        print("Player 2 just lost health. They are down to " +str(player_2_health))
+                        player_1_speed = player_1_speed - 5
+                        player_2_speed = player_2_speed - 5
+                else:
+                            
+                    role_1 = random.randint(1, 6)
+                            
+                    if role_1 == 1 or 2:
+                        print("You still got hit barely!")
+                        player_1_speed = player_1_speed - 5
+                        player_2_health = player_2_health - player_1_damage
+                        player_2_speed = player_2_speed - 5
+                               
+                    else:
+                        print("You dodged Player 1's attack!")
+                        player_1_speed = player_1_speed - 5
+                        player_2_speed = player_2_speed - 5
+                        
+            else:    
+                player_2_health = player_2_health - player_1_damage 
+                print("Player 2 just lost health. They are down to " +str(player_2_health))
+                player_1_speed = player_1_speed - 5
+
+#Healing    
+    elif player_1_move == "Heal":
+        
+        player_1_heal_choice = input("What do you want to heal?(Speed or Health?): ")
+        
+        if player_1_heal_choice == "Speed":
+            if player_1_speed > 110:
+                print("You are at max speed, you cannot gain more speed!")
+            else:
+                print("You just gained 5 speed!")
+                player_1_speed = player_1_speed + 5
+        else:
+            if player_1_health > 120:
+                print("You are at max health, you cannot gain more health!")
+            else:
+                player_1_health = player_1_health + 12.5
+                print("Player 1 just gained some health. They are at " +str(player_1_health))
+
+#Stealing
+    elif player_1_move == "Steal" and player_1_speed >= 5 and player_1 == "Bandit":
+        role_1 = random.randint(1,3)
+        if role_1 == 1:
+            print("You stole alot of Player 2's MP!")
+            player_1_mp = player_1_mp + (player_2_mp *.4)
+            player_2_mp = player_2_mp * .6
+            player_1_speed = player_1_speed - 5
+        elif role_1 == 2:
+            print("You stole a little of Player 2's MP!")
+            player_1_mp = player_1_mp + (player_2_mp * .2)
+            player_2_mp = player_2_mp * .8
+            player_1_speed = player_1_speed - 5
+        else:
+            print("You stole almost none of Player 2's MP!")
+            player_1_mp = player_1_mp + (player_2_mp * .07)
+            player_2_mp = player_2_mp * .93
+            player_1_speed = player_1_speed - 5
+            
+#Pet Attacks
+
+    elif player_1_move == "Pet Attack" and player_1_pet_food >= 10:
+        if player_1_pet == "Dog":
+            print("")
+            print("What does your pet want to do?: ")
+            print("")
+            print("-Attack (10 Pet Food)")
+            print("-Gather Pet Food")
+            print("")
+            player_1_pet_attack_choice = input("")
+            if player_1_pet_attack_choice == "Attack":
+                role_1 = random.randint(1,4)
+                if role_1 == 1 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's dog hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 2 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's dog hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 3 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's dog hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 4 and player_1_pet_food >= 10:
+                    print("")
+                    print("Sadly, Player One's dog did not hit Player Two!")
+                    player_1_pet_food = player_1_pet_food - 10
+                else:
+                    print("")
+                    print("You do not have enough pet food to attack!")
+                    
+            else:
+                print("")
+                print("How much pet food do you want to gather?")
+                print("")
+                print("-5 (5MP)")
+                print("-15 (14MP)")
+                print("")
+                pet_food_amount = int(input("Enter your amount: "))
+                if pet_food_amount == 5 and player_1_mp >= 5:
+                    print("")
+                    print("You gained 5 pet food!")
+                    player_1_pet_food = player_1_pet_food + 5
+                    player_1_mp = player_1_mp - 5
+                elif pet_food_amount == 15 and player_1_mp >= 15:
+                    print("")
+                    print("You gained 15 pet food")
+                    player_1_pet_food = player_1_pet_food + 15
+                    player_1_mp = player_1_mp - 14
+                else:
+                    print("")
+                    print("You cannot aford pet food, sorry!")
+                    
+        
+        elif player_1_pet == "Cow":
+            print("")
+            print("What does your pet want to do?: ")
+            print("")
+            print("-Attack (10 Pet Food)")
+            print("-Gather Pet Food")
+            print("")
+            player_1_pet_attack_choice = input("")
+            if player_1_pet_attack_choice == "Attack":
+                role_1 = random.randint(1,4)
+                if role_1 == 1 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's cow hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 2 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's cow hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 3 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's cow hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 4 and player_1_pet_food >= 10:
+                    print("")
+                    print("Sadly, Player One's cow did not hit Player Two!")
+                    player_1_pet_food = player_1_pet_food - 10
+                else:
+                    print("")
+                    print("You do not have enough pet food to attack!")
+                    
+            else:
+                print("")
+                print("How much pet food do you want to gather?")
+                print("")
+                print("-5 (5MP)")
+                print("-15 (14MP)")
+                print("")
+                pet_food_amount = int(input("Enter your amount: "))
+                if pet_food_amount == 5 and player_1_mp >= 5:
+                    print("")
+                    print("You gained 5 pet food!")
+                    player_1_pet_food = player_1_pet_food + 5
+                    player_1_mp = player_1_mp - 5
+                elif pet_food_amount == 15 and player_1_mp >= 15:
+                    print("")
+                    print("You gained 15 pet food")
+                    player_1_pet_food = player_1_pet_food + 15
+                    player_1_mp = player_1_mp - 14
+                else:
+                    print("")
+                    print("You cannot aford pet food, sorry!")
+        
+                    
+                    
+                    
+        elif player_1_pet == "Rat":
+            print("")
+            print("What does your pet want to do?:")
+            print("")
+            print("-Attack (10 Pet Food)")
+            print("-Gather Pet Food")
+            print("")
+            player_1_pet_attack_choice = input("")
+            if player_1_pet_attack_choice == "Attack":
+                role_1 = random.randint(1,4)
+                if role_1 == 3 and rat_poison_enabled_player_2 == True:
+                    role_1 = 4
+                if role_1 == 1 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's rat hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 2 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's rat hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 3 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's rat poisoned Player Two! They will now take 4 damage at the end of each round for three rounds!")
+                    player_1_pet_food = player_1_pet_food - 10
+                    rat_poison_enabled_player_2 = True
+                elif role_1 == 4 and player_1_pet_food >= 10:
+                    print("")
+                    print("Sadly, Player One's rat did not hit Player Two!")
+                    player_1_pet_food = player_1_pet_food - 10
+                else:
+                    print("")
+                    print("You do not have enough pet food to attack!")
+            
+            else:
+                print("")
+                print("How much pet food do you want to gather?")
+                print("")
+                print("-5 (5MP)")
+                print("-15 (15MP)")
+                print("")
+                pet_food_amount = int(input("Enter your amount: "))
+                if pet_food_amount == 5 and player_1_mp >= 5:
+                    print("")
+                    print("You gained 5 pet food!")
+                    player_1_mp = player_1_mp - 5
+                    player_1_pet_food = player_1_pet_food + 5
+                elif pet_food_amount == 15 and player_1_mp >= 14:
+                    print("")
+                    print("You gained 15 pet food!")
+                    player_1_pet_food = player_1_pet_food + 15
+                    player_1_mp = player_1_mp - 14
+                else:
+                    print("")
+                    print("You cannot aford pet food, sorry!")
+
+        elif player_1_pet == "Fire Dragon":    
+            print("")
+            print("What does your pet want to do?:")
+            print("")
+            print("-Attack (10 Pet Food)")
+            print("-Gather Pet Food")
+            print("")
+            player_1_pet_attack_choice = input("")
+            if player_1_pet_attack_choice == "Attack":
+                role_1 = random.randint(1,4)
+                if role_1 == 3 and dat_poison_enabled_player_2 == True:
+                    role_1 = 4
+                if role_1 == 1 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's Dragon hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 2 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's Dragon hit Player Two!")
+                    player_2_health = player_2_health - player_1_pet_damage
+                    player_1_pet_food = player_1_pet_food - 10
+                elif role_1 == 3 and player_1_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player One's Dragon lit Player Two on fire! They will now take 7 damage at the end of each round for three rounds!")
+                    player_1_pet_food = player_1_pet_food - 10
+                    dat_poison_enabled_player_2 = True
+                elif role_1 == 4 and player_1_pet_food >= 10:
+                    print("")
+                    print("Sadly, Player One's Dragon did not hit Player Two!")
+                    player_1_pet_food = player_1_pet_food - 10
+                else:
+                    print("")
+                    print("You do not have enough pet food to attack!")
+              
+            else:
+                print("")
+                print("How much pet food do you want to gather?")
+                print("")
+                print("-5 (5MP)")
+                print("-15 (15MP)")
+                print("")
+                pet_food_amount = int(input("Enter your amount: "))
+                if pet_food_amount == 5 and player_1_mp >= 5:
+                    print("")
+                    print("You gained 5 pet food!")
+                    player_1_mp = player_1_mp - 5
+                    player_1_pet_food = player_1_pet_food + 5
+                elif pet_food_amount == 15 and player_1_mp >= 14:
+                    print("")
+                    print("You gained 15 pet food!")
+                    player_1_pet_food = player_1_pet_food + 15
+                    player_1_mp = player_1_mp - 14
+                else:
+                    print("")
+                    print("You cannot aford pet food, sorry!")
+            
+#Attacking Pets
+
+    elif player_1_move == "Attack Pet" and Pets_enable == "Yes":
+        pet_attack_choice_player_1 = input("Are you sure you want to attack Player 2's pet?(Yes/No): ")
+        if pet_attack_choice_player_1 == "Yes":
+            role_1 = random.randint(1,3)
+            if role_1 == 1:
+                print("")
+                print("You missed Player 2's Pet!")
+                player_1_speed = player_1_speed - 5
+            else:    
+                print("")
+                print("You hit Player 2's Pet!")
+                player_2_pet_health = player_2_pet_health - player_1_damage
+                player_1_speed = player_1_speed - 5
+        else:
+            print("")
+            print("You saved Player 2's Pet! You get 1 MP!")
+            player_1_mp = player_1_mp + 1
+        
+        if player_2_pet_health <= 0:
+            print("")
+            print("----------------------------------------")
+            print("")
+            print("Player 2: Your pet has died! You can now buy another pet with MP!")
+            player_2_pet = ""
+
+#selling items
+    
+    elif player_1_move == "Sell Item" and player_1_item != "" and item_counter_1 >= 4:
+        sell = input("Do you want to sell your item?(Yes/No): ")
+        if sell == "Yes":
+            if player_1_item == "Magical Boots":
+                print("")
+                print("You just got 50 Mp back for your Magical Boots")
+                player_1_item = ""
+                player_1_mp = player_1_mp + 50
+            elif player_1_item == "Rock":
+                print("")
+                print("You just got 5 Mp back for your Rock")
+                player_1_item = ""
+                player_1_mp = player_1_mp + 5
+            elif player_1_item == "Sword":
+                print("")
+                print("You just got 20 Mp back for your Sword")
+                player_1_item = ""
+                player_1_mp = player_1_mp + 20
+            elif player_1_item == "Water Bucket":
+                print("")
+                print("You just got 7 Mp back for your Water Bucket")
+                player_1_item = ""
+                player_1_mp = player_1_mp + 7
+        else:
+            print("")
+            print("You did not sell your item, you get .01 health!")
+            print("")
+            player_1_health = player_1_health + .01
+            
+#Rock Throwing
+    elif player_1_move == "Throw Rock" and player_1_item == "Rock":
+        player_1_throw_rock = input("Do you want to throw your rock at Player 2?(Yes/No): ")
+        if player_1_throw_rock == "Yes":
+            print("Player 2 got hit by a rock!")
+            player_1_speed = player_1_speed - 1
+            player_2_health = player_2_health - 11
+            player_1_item = ""
+        else:
+            print("You saved your rock for a round!")
+            print("You have had this rock for this many rounds: " + str(rrc1))
+            
+#Using Water
+    elif player_1_move == "Use Water" and dat_poison_enabled_player_1 == True:
+        print("Player 1: You have just used your water bucket to get rid of fire tick!")
+        dat_poison_enabled_player_1 = False
+        dat_poison_player_1 = 5
+        player_1_item = ""
+
+#Magic
+    elif player_1_move == "Magic":
+        
+        print("")
+        print("----------------------------------------")
+        print("")
+        
+        if player_1 == "Wizard":
+            print("Normal Magic:")
+            print("-Super Hit (60 MP)")
+            print("-Coin Gain (20% Health)")
+            print("")
+            print("Wizard Specials:")
+            print("Fire Ball (40 Mp)")
+            print("2x Damage (80 Mp)")
+            print("")
+            
+            player_1_magic = input("What magic do you want to use?: ")
+            
+            if player_1_magic == "Super Hit":
+                
+                if player_1_mp < 60:
+                    print("You cannot aford this! You lost your turn!")
+                else:
+                    player_2_health = player_2_health * .63
+                    player_1_mp = player_1_mp - 60
+                    print("You hit player 2 with an insane hit!")
+                    print("Player 2's health: " +str(player_2_health))
+                
+            elif player_1_magic == "Coin Gain":
+                
+                player_1_mp = player_1_mp + 15
+                player_1_health = player_1_health * .8
+                print("Player 1 gained 15 MP!")
+            
+            elif player_1_magic == "Fire Ball":
+                
+                if player_1_mp < 40:
+                    print("You cannot aford this! You lost your turn!")
+                else:
+                    player_1_mp = player_1_mp - 40
+                    player_2_health = player_2_health * .63
+                    print("You hit Player 2 with a fire ball!")
+                    print("Player 2's health: " +str(player_2_health))
+                
+            elif player_1_magic == "2x Damage":
+                
+                if player_1_mp < 80:
+                    print("You cannot aford this! You lost your turn")
+                else:
+                    player_1_damage = player_1_damage * 2
+                    player_1_mp = player_1_mp - 80
+                    print("Player 1 now has 2x damage!")
+            
+        else:
+            print("Normal Magic:")
+            print("-Super Hit (60 MP)")
+            print("-Coin Gain (20% Health)")
+            print("")
+            
+            player_1_magic = input("What magic do you want to use?: ")
+            
+            if player_1_magic == "Super Hit":
+                
+                if player_1_mp < 60:
+                    print("You cannot aford this! You lost your turn")
+                else:
+                    player_2_health = player_2_health * .63
+                    player_1_mp = player_1_mp - 60
+                    print("You hit Player 2 with an insane hit!")
+                    print("Player 2's health: " +str(player_2_health))
+                
+            elif player_1_magic == "Coin Gain":
+                player_1_mp = player_1_mp + 15
+                player_1_health = player_1_health * .8
+                print("Player 1 gained 15 MP!")
+
+    print("")
+    print("----------------------------------------")
+    
+    if player_1 == player_2:
+        player_1_health = p1ogh
+        player_1_speed = p1ogs
+        player_1_damage = p1ogd
+        player_1 = p1ogc
+    
+#If someone dies    
+    
+    if player_1_health <= 0:
+        try:  
+            print("")
+            print("Congrats "+player_2_name,",you won the match after this many rounds: " +str(round_number))
+            print(":End of simulation:")
+            game_over = False
+            exit()
+        except TypeError: 
+            print("")
+            print("Congrats " +player_2_name)
+            print("you won the match after this many rounds: " +str(round_number))
+            print(":End of simulation:")
+            game_over = False
+            exit()
+    if player_2_health <= 0:
+        try:  
+            print("")
+            print("Congrats "+player_1_name,",you won the match after this many rounds: " +str(round_number))
+            print(":End of simulation:")
+            game_over = False
+            exit()
+        except TypeError: 
+            print("")
+            print("Congrats " +player_1_name)
+            print("you won the match after this many rounds: " +str(round_number))
+            print(":End of simulation:")
+            game_over = False
+            exit()
+    
+#Player 2's turn
+    
+    #These options are purley for organizational purposes
+    option2_1 = "Attack"
+    option2_2 = "Heal"
+    option2_3 = "Magic"
+    option2_4 = "Steal"
+    option2_5 = "Throw Rock"
+    option2_6 = "Pet Attack"
+    option2_7 = "Attack Pet"
+    option2_8 = "Use Water"
+    option2_9 = "Sell Item"
+    
+    p2ogh = player_2_health
+    p2ogs = player_2_speed
+    p2ogd = player_2_damage
+    p2ogc = player_2
+    
+    if player_2 == "Shapeshifter" and player_2_mp >= 40:
+        ss2 = input("Do you want to shapeshift into Player 1's character for this turn?(40MP)(Yes/No): ")
+        if ss2 == "Yes":
+            print("You are now a " +(player_1)+ " for this turn!")
+            print("")
+            player_2_health = player_1_health
+            player_2_speed = player_1_speed
+            player_2_damage = player_1_damage
+            player_2_mp = player_2_mp - 40
+            player_2 = player_1
+            role_2 = random.randint(1,3)
+            if role_2 == 1:
+                print("Shapeshifting Falure! Some of you muscle tissue decayed! (HP - 5)")
+                p2ogh = p2ogh - 5
+                p2ogs = p2ogs - 5
+                print("")
+            else:
+                print("Shapeshifting Success!")
+                p2ogs = p2ogs - 5
+                print("")
+    
+    print("")
+    print("Player 2 turn (type an option):")
+    print("")
+    
+    print(option2_1)
+    print(option2_2)
+    print(option2_3)
+    if player_2 == "Bandit":
+        print(option2_4)
+    if player_2_item == "Rock":
+        print(option2_5)
+    if player_2_pet != "":
+        print(option2_6)
+    if player_1_pet != "":
+        print(option2_7)
+    if player_2_item == "Water Bucket" and dat_poison_enabled_player_2 == True:
+        print(option2_8)
+    if player_1_item != "" and item_counter_1 >= 3:
+        print(option1_9)
+    print("")
+    
+    player_2_move = input("Move: ")
+    print("")
+    
+    if player_2_move == "Attack":
+#Attacking/Kicking        
+        if player_2_item == "Magical Boots" and player_2_speed >= 15:
+            player_1_move = input("Do you want to Kick or Attack?: ")
+            if player_1_move == "Kick":
+                role_2 = random.randint(1, 4)
+                if role_2 == 1:
+                    print("You hit Player 1!")
+                    player_1_health = player_1_health - player_2_damage *1.2
+                    player_2_speed = player_2_speed - 15
+                elif role_2 == 2:
+                    print("You nipped Player 1!")
+                    player_1_health = player_1_health - player_2_damage
+                    player_2_speed = player_2_speed - 15
+                elif role_2 == 3:
+                    print("You hit Player 1!")
+                    player_1_health = player_1_health - player_2_damage *1.2
+                    player_2_speed = player_2_speed - 15
+                else:
+                    print("You missed Player 1!")
+                    player_2_speed = player_2_speed - 7.5
+
+            #Add normal attack if player 2 does not want to kick
+            else:
+                
+                player_1_dodge = input("Player 1: Player 2 just attacked you, do you want to spend some speed to dodge it?(Yes/No): ")
+                print("")
+                
+                if player_1_dodge == "Yes":
+                    
+                    if player_1_speed - player_2_speed <= 20:
+                        
+                        role_2 = random.randint(1, 4)
+                        
+                        if role_2 == 1:
+                            print("You just dodged Player 2's attack, congrats!")
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                        elif role_2 == 2:
+                            print("You did not dodge the attack!")
+                            player_1_health = player_1_health - player_2_damage
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                        else:
+                            print("You did not dodge the attack!")
+                            player_1_health = player_1_health - player_2_damage
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                    else:
+                        role_2 = random.randint(1, 6)
+                        
+                        if role_2 == 1 or 2:
+                            print("you still got hit barely!")
+                            player_1_health = player_1_health - player_1_damage
+                            player_1_speed = player_1_speed - 5
+                            player_2_speed = player_2_speed - 5
+                        else:
+                            print("You dodged Player 2's attack!")
+                            player_2_speed = player_2_speed - 5
+                            player_1_speed = player_1_speed - 5
+                            
+                else:
+                    player_1_health = player_1_health - player_2_damage
+                    player_2_speed = player_2_speed - 5
+                    print("Player 1 just lost health. They are down to " +str(player_1_health))
+                
+        else:
+
+            player_1_dodge = input("Player 1: Player 2 just attacked you, do you want to spend some speed to dodge it?(Yes/No): ")
+            print("")    
+                    
+            if player_1_dodge == "Yes":
+                
+                if player_1_speed - player_2_speed <= 20:
+                
+                    role_2 = random.randint(1, 4)
+                        
+                    if role_2 == 1:
+                        print("You just doged Player 2's attack, congrats!")
+                        player_2_speed = player_2_speed - 5
+                        player_1_speed = player_1_speed - 5
+                    elif role_2 == 2:
+                        print("You did not dodge the attack!")
+                        player_1_health = player_1_health - player_2_damage
+                        player_1_speed = player_1_speed - 5
+                        player_2_speed = player_2_speed - 5
+                    else:
+                        print("You did not dodge the attack!")
+                        player_1_health = player_1_health - player_2_damage
+                        player_1_speed = player_1_speed - 5
+                        player_2_speed = player_2_speed - 5
+                            
+                else:
+                    role_2 = random.randint(1, 6)
+                        
+                    if role_2 == 1 or 2:
+                        print("You still got hit barely!")
+                        player_1_health = player_1_health - player_2_damage
+                        player_1_speed = player_1_speed - 5
+                        player_2_speed = player_2_speed - 5
+                    else:
+                        print("You dodged Player 2's attack!")
+                        player_2_speed = player_2_speed - 5
+                        player_1_speed = player_1_speed - 5
+                    
+            else:
+                player_1_health = player_1_health - player_2_damage
+                print("Player 1 just lost health. They are down to " +str(player_1_health))
+                player_2_speed = player_2_speed - 5
+   
+#Healing  
+    elif player_2_move == "Heal":
+        
+        player_2_heal_choice = input("What do you want to heal?(Speed or health): ")
+        
+        if player_2_heal_choice == "Speed":
+            if player_2_speed > 110:
+                print("You are at max speed, you cannot gain more speed!")
+            else:
+                print("You just gained 5 speed!")
+                player_2_speed = player_2_speed + 5
+        else:
+            if player_2_health > 120:
+                print("You are at max health, you cannot gain more health!")
+            else:
+                player_2_health = player_2_health + 12.5
+                print("Player 2 just gained some health. They are at " +str(player_2_health))
+                
+#Stealing
+    elif player_2_move == "Steal" and player_2_speed >= 5 and player_2 == "Bandit":
+        role_2 = random.randint(1,3)
+        if role_2 == 1:
+            print("You stole alot of Player 1's MP!")
+            player_2_mp = player_2_mp + (player_1_mp * .4)
+            player_1_mp = player_1_mp * .6
+            player_2_speed = player_2_speed - 5
+        elif role_2 == 2:
+            print("You stole a little of Player 1's MP!")
+            player_2_mp = player_2_mp + (player_1_mp * .2)
+            player_1_mp = player_1_mp * .8
+            player_2_speed = player_2_speed - 5
+        else:
+            print("You stole almost none of Player 1's MP!")
+            player_2_mp = player_2_mp + (player_1_mp * .07)
+            player_1_mp = player_1_mp * .93
+            player_2_speed = player_2_speed - 5
+            
+#Pet Attacks
+    
+    elif player_2_move == "Pet Attack" and player_2_pet_food >= 10:
+        if player_2_pet == "Dog":
+            print("")
+            print("What does your pet want to do?:")
+            print("")
+            print("-Attack (10 Pet Food)")
+            print("-Gather Pet Food")
+            print("")
+            player_2_pet_attack_choice = input("")
+            if player_1_pet_attack_choice == "Attack":
+                role_2 = random.randint(1,4)
+                if role_2 == 1 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's dog hit Player One!")
+                    player_1_health = player_1_health - player_2_pet_damage
+                    player_2_pet_food = player_2_pet_food - 10
+                elif role_2 == 2 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's dog hit Player One!")
+                    player_1_health = player_1_health - player_2_pet_damage
+                    player_2_pet_food = player_2_pet_food - 10
+                elif role_2 == 3 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's dog hit Player One!")
+                    player_1_health = player_1_health - player_2_pet_damage
+                    player_2_pet_food = player_2_pet_food - 10
+                elif role_2 == 4 and player_2_pet_food >= 10:
+                    print("")
+                    print("Sadly, Player Two's dog did not hit Player One!")
+                    player_2_pet_food = player_2_pet_food - 10
+                else:
+                    print("")
+                    print("You do not have enough pet food to attack!")
+                    
+            else:
+                print("")
+                print("How much pet food do you want to gather?")
+                print("")
+                print("-5 (5MP)")
+                print("-15 (14MP)")
+                print("")
+                pet_food_amount = int(input("Enter your amount: "))
+                if pet_food_amount == 5 and player_2_mp >= 5:
+                    print("")
+                    print("You gained 5 pet food!")
+                    player_2_mp = player_2_mp - 5
+                    player_2_pet_food = player_2_pet_food + 5
+                elif pet_food_amount == 15 and player_2_mp >= 14:
+                    print("")
+                    print("You gained 15 pet food!")
+                    player_2_mp = player_2_mp - 14
+                    player_2_pet_food = player_2_pet_food + 15
+                else:
+                    print("")
+                    print("You cannot aford pet food, sorry!")
+        
+        if player_2_pet == "Cow":
+            print("")
+            print("What does your pet want to do?:")
+            print("")
+            print("-Attack (10 Pet Food)")
+            print("-Gather Pet Food")
+            print("")
+            player_2_pet_attack_choice = input("")
+            if player_1_pet_attack_choice == "Attack":
+                role_2 = random.randint(1,4)
+                if role_2 == 1 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's cow hit Player One!")
+                    player_1_health = player_1_health - player_2_pet_damage
+                    player_2_pet_food = player_2_pet_food - 10
+                elif role_2 == 2 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's cow hit Player One!")
+                    player_1_health = player_1_health - player_2_pet_damage
+                    player_2_pet_food = player_2_pet_food - 10
+                elif role_2 == 3 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's cow hit Player One!")
+                    player_1_health = player_1_health - player_2_pet_damage
+                    player_2_pet_food = player_2_pet_food - 10
+                elif role_2 == 4 and player_2_pet_food >= 10:
+                    print("")
+                    print("Sadly, Player Two's cow did not hit Player One!")
+                    player_2_pet_food = player_2_pet_food - 10
+                else:
+                    print("")
+                    print("You do not have enough pet food to attack!")
+                    
+            else:
+                print("")
+                print("How much pet food do you want to gather?")
+                print("")
+                print("-5 (5MP)")
+                print("-15 (14MP)")
+                print("")
+                pet_food_amount = int(input("Enter your amount: "))
+                if pet_food_amount == 5 and player_2_mp >= 5:
+                    print("")
+                    print("You gained 5 pet food!")
+                    player_2_mp = player_2_mp - 5
+                    player_2_pet_food = player_2_pet_food + 5
+                elif pet_food_amount == 15 and player_2_mp >= 14:
+                    print("")
+                    print("You gained 15 pet food!")
+                    player_2_mp = player_2_mp - 14
+                    player_2_pet_food = player_2_pet_food + 15
+                else:
+                    print("")
+                    print("You cannot aford pet food, sorry!")
+        
+        elif player_2_pet == "Rat":
+            print("")
+            print("What does your pet want to do?")
+            print("")
+            print("-Attack (10 Pet Food)")
+            print("-Gather Pet Food")
+            print("")
+            player_2_pet_attack_choice = input("")
+            if player_2_pet_attack_choice == "Attack":
+                role_2 = random.randint(1,4)
+                if role_2 == 3 and rat_poison_enabled_player_1 == True:
+                    role_2 = 4
+                if role_2 == 1 or 2 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's rat bit Player One!")
+                    player_1_health = player_1_health - player_2_pet_damage
+                    player_2_pet_food = player_2_pet_food - 10
+                elif role_2 == 3 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's rat poisoned Player One! They will now take 4 damage at the end of each round for three rounds!")
+                    player_2_pet_food = player_2_pet_food - 10
+                    rat_poison_enabled_player_1 = True
+                elif role_2 == 4 and player_2_pet_food >= 10:
+                    print("")
+                    print("Sadly, Player Two's rat did not hit Player One!")
+                    player_2_pet_food = player_2_pet_food - 10
+                else:
+                    print("")
+                    print("You do not have enough pet food to attack!")
+            
+            else:
+                print("")
+                print("How much pet food do you want to gather?")
+                print("")
+                print("-5 (5MP)")
+                print("-15 (14MP)")
+                print("")
+                pet_food_amount = int(input("Enter your amount: "))
+                if pet_food_amount == 5 and player_2_mp >= 5:
+                    print("")
+                    print("You gained 5 pet food!")
+                    player_2_pet_food = player_2_pet_food + 5
+                    player_2_mp = player_2_mp - 5
+                elif pet_food_amount == 15 and player_2_mp >= 14:
+                    print("")
+                    print("You gained 15 pet food!")
+                    player_2_pet_food = player_2_pet_food + 15
+                    player_2_mp = player_2_mp - 14
+                else:
+                    print("")
+                    print("You cannot aford pet food, sorry!")
+            
+        elif player_2_pet == "Fire Dragon":
+            print("")
+            print("What does your pet want to do?")
+            print("")
+            print("-Attack (10 Pet Food)")
+            print("-Gather Pet Food")
+            print("")
+            player_2_pet_attack_choice = input("")
+            if player_2_pet_attack_choice == "Attack":
+                role_2 = random.randint(1,4)
+                if role_2 == 3 and dat_poison_enabled_player_1 == True:
+                    role_2 = 4
+                if role_2 == 1 or 2 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's Dragon bit Player One!")
+                    player_1_health = player_1_health - player_2_pet_damage
+                    player_2_pet_food = player_2_pet_food - 10
+                elif role_2 == 3 and player_2_pet_food >= 10:
+                    print("")
+                    print("Congrats! Player Two's Dragon lit Player One on fire! They will now take 7 damage at the end of each round for three rounds!")
+                    player_2_pet_food = player_2_pet_food - 10
+                    dat_poison_enabled_player_1 = True
+                elif role_2 == 4 and player_2_pet_food >= 10:
+                    print("")
+                    print("Sadly, Player Two's Dragon did not hit Player One!")
+                    player_2_pet_food = player_2_pet_food - 10
+                else:
+                    print("")
+                    print("You do not have enough pet food to attack!")
+            
+            else:
+                print("")
+                print("How much pet food do you want to gather?")
+                print("")
+                print("-5 (5MP)")
+                print("-15 (14MP)")
+                print("")
+                pet_food_amount = int(input("Enter your amount: "))
+                if pet_food_amount == 5 and player_2_mp >= 5:
+                    print("")
+                    print("You gained 5 pet food!")
+                    player_2_pet_food = player_2_pet_food + 5
+                    player_2_mp = player_2_mp - 5
+                elif pet_food_amount == 15 and player_2_mp >= 14:
+                    print("")
+                    print("You gained 15 pet food!")
+                    player_2_pet_food = player_2_pet_food + 15
+                    player_2_mp = player_2_mp - 14
+                else:
+                    print("")
+                    print("You cannot aford pet food, sorry!")
+
+#Attacking Pets
+
+    elif player_1_move == "Attack Pet" and Pets_enable == "Yes":
+        pet_attack_choice_player_2 = input("Are you sure you want to attack Player 1's pet?(Yes/No): ")
+        if pet_attack_choice_player_2 == "Yes":
+            role_2 = random.randint(1,3)
+            if role_2 == 1:
+                print("")
+                print("You missed Player 1's Pet!")
+                player_2_speed = player_2_speed - 5
+            else:
+                print("")
+                print("You hit Player 1's Pet!")
+                player_1_pet_health = player_1_pet_health - player_2_damage
+                player_2_speed = player_2_speed - 5
+        else:
+            print("")
+            print("You saved Player 1's Pet! You get 1 MP!")
+            player_2_mp = player_2_mp + 1
+        
+        if player_1_pet_health <= 0:
+            print("")
+            print("----------------------------------------")
+            print("")
+            print("Player 1: Your pet has died! You can now buy another pet with MP!")
+            player_1_pet = ""
+
+#selling items
+    
+    elif player_2_move == "Sell Item" and player_2_item != "" and item_counter_2 >= 4:
+        sell2 = input("Do you want to sell your item?(Yes/No): ")
+        if sell2 == "Yes":
+            if player_2_item == "Magical Boots":
+                print("")
+                print("You just got 50 Mp back for your Magical Boots")
+                player_2_item = ""
+                player_2_mp = player_2_mp + 50
+            elif player_2_item == "Rock":
+                print("")
+                print("You just got 5 Mp back for your Rock")
+                player_2_item = ""
+                player_2_mp = player_2_mp + 5
+            elif player_2_item == "Sword":
+                print("")
+                print("You just got 20 Mp back for your Sword")
+                player_2_item = ""
+                player_2_mp = player_2_mp + 20
+            elif player_2_item == "Water Bucket":
+                print("")
+                print("You just got 7 Mp back for your Water Bucket")
+                player_2_item = ""
+                player_2_mp = player_2_mp + 7
+        else:
+            print("")
+            print("You did not sell your item, you get .01 health!")
+            print("")
+            player_2_health = player_2_health + .01
+
+#Rock Throwing 
+
+    elif player_2_item == "Rock" and player_2_move == "Throw Rock":
+        player_2_rock_throw = input("Do you want to throw your rock at Player 1?(Yes/No): ")
+        if player_2_rock_throw == "Yes":
+            print("Player 1 got hit by a rock!")
+            player_2_speed = player_2_speed - 1
+            player_1_health = player_1_health - 11
+            player_2_item = ""
+        else:
+            print("You saved your rock for a round")
+            print("You have had this rock for this many rounds: " +str(rrc2))
+
+#Using Water
+    elif player_2_move == "Use Water" and dat_poison_enabled_player_2 == True:
+        print("Player 2: You have just used your water bucket to get rid of fire tick!")
+        dat_poison_enabled_player_2 = False
+        dat_poison_player_2 = 5
+        player_2_item = ""
+
+#Magic
+    elif player_2_move == "Magic":
+        
+        print("----------------------------------------")
+        print("")
+    
+        if player_2 == "Wizard":
+            print("Normal Magic:")
+            print("-Super Hit (60 MP)")
+            print("-Coin Gain (20% Health)")
+            print("")
+            print("Wizard Specials:")
+            print("Fire Ball (40 MP)")
+            print("2x Damage (80 MP)")
+            print("")
+            
+            player_2_magic = input("What magic do you want to use?: ")
+            
+            if player_2_magic == "Super Hit":
+                
+                if player_2_mp < 60:
+                    print("You cannot aford this! You lost your turn!")
+                else:
+                    player_1_health = player_1_health * .63
+                    player_2_mp = player_2_mp - 60
+                    print("You hit Player 1 with an insane hit!")
+                    print("Player 1's health: " +str(player_1_health))
+                
+            elif player_2_magic == "Coin Gain":
+                
+                player_2_mp = player_2_mp + 15
+                player_2_health = player_2_health * .8
+                print("Player 2 gained 15 MP!")
+                
+            elif player_2_magic == "Fire Ball":
+                
+                if player_2_mp < 40:
+                    print("You cannot aford this! You lost your turn!")
+                else:
+                    player_1_health = player_1_health * .63
+                    print("You hit Player 1 with a fire ball!")
+                    player_2_mp = player_2_mp - 40
+                    print("Player 1's health: " +str(player_1_health))
+                
+            elif player_2_magic == "2x Damage":
+                
+                if player_2_mp < 80:
+                    print("You cannot aford this! You lost your turn!")
+                else:
+                    print("Player 2 now has 2x damage!")
+                    player_2_mp = player_2_mp - 80
+                    player_2_damage = player_2_damage * 2
+        else:
+            print("Normal magic:")
+            print("-Super Hit (60 MP)")
+            print("-Coin Gain (20% Health)")
+            print("")
+            
+            player_2_magic = input("What magic do you want to use?: ")
+            
+            if player_2_magic == "Super Hit":
+                
+                if player_2_mp < 60:
+                    print("You cannot aford this! You lost your turn!")
+                else:
+                    player_1_health = player_1_health * .63
+                    player_2_mp = player_2_mp - 60
+                    print("You hit Player 1 with an insane hit!")
+                    print("Player 1's health: " +str(player_1_health))
+
+            elif player_2_magic == "Coin Gain":
+                player_2_mp = player_2_mp + 15
+                player_2_health = player_2_health * .8
+                print("Player 2 just gained 15 MP!")
+    print("")
+    print("----------------------------------------")
+
+    if player_2 == player_1:
+        player_2_health = p2ogh
+        player_2_speed = p2ogs
+        player_2_damage = p2ogd
+        player_2 = p2ogc
+
+#Change the rat poison effect/Dragon Fire to here so you can see you lost health     
+    
+    #Rat pets poison attack
+    if rat_poison_enabled_player_1 == True and rat_poison_player_1 > 0:
+        player_1_health = player_1_health - 4
+        rat_poison_player_1 = rat_poison_player_1 - 1
+        print("")
+        print("Player 1 just lost 4 health to Player 2's rat's poison")
+    elif rat_poison_enabled_player_1 == True and rat_poison_player_1 <= 0:
+        rat_poison_player_1 = 3
+        rat_poison_enabled_player_1 = False
+        
+    if rat_poison_enabled_player_2 == True and rat_poison_player_2 > 0:
+        player_2_health = player_2_health - 4
+        rat_poison_player_2 = rat_poison_player_2 - 1
+        print("")
+        print("Player 2 just lost 4 health to Player 1's rat's poison")
+    elif rat_poison_enabled_player_2 == True and rat_poison_player_2 <= 0:
+        rat_poison_player_2 = 3
+        rat_poison_enabled_player_2 = False
+    
+    #Fire Dragon Fire attack ticks goes here
+    if dat_poison_enabled_player_1 == True and dat_poison_player_1 > 0:
+        player_1_health = player_1_health - 7
+        dat_poison_player_1 = dat_poison_player_1 - 1
+        print("")
+        print("Player 1 just lost 7 health to Player 2's pets fire")
+    elif dat_poison_enabled_player_1 == True and dat_poison_player_1 <= 0:
+        dat_poison_player_1 = 5
+        dat_poison_enabled_player_1 = False
+        
+    if dat_poison_enabled_player_2 == True and dat_poison_player_2 > 0:
+        player_2_health = player_2_health - 7
+        dat_poison_player_2 = dat_poison_player_2 - 1
+        print("")
+        print("Player 2 just lost 7 health to Player 1's pets fire")
+    elif dat_poison_enabled_player_2 == True and dat_poison_player_2 <= 0:
+        dat_poison_player_2 = 5
+        dat_poison_enabled_player_2 = False
+    
+#If Someone Dies
+    
+    if player_1_health <= 0:
+        try:  
+            print("")
+            print("Congrats "+player_2_name,",you won the match after this many rounds: " +str(round_number))
+            print(":End of simulation:")
+            game_over = False
+            exit()
+        except TypeError: 
+            print("")
+            print("Congrats " +player_2_name)
+            print("you won the match after this many rounds: " +str(round_number))
+            print(":End of simulation:")
+            game_over = False
+            exit()
+    if player_2_health <= 0:
+        try:  
+            print("")
+            print("Congrats "+player_1_name,",you won the match after this many rounds: " +str(round_number))
+            print(":End of simulation:")
+            game_over = False
+            exit()
+        except TypeError: 
+            print("")
+            print("Congrats " +player_1_name)
+            print("you won the match after this many rounds: " +str(round_number))
+            print(":End of simulation:")
+            game_over = False
+            exit()
+    
+#Stats for knowledge at the end of each round     
+    
+    print("")    
+    print("End of round stats:")    
+    print("")    
+    print("Player 1:")    
+    print("")
+    
+    print("Hp: " +str(round(player_1_health, 1)))    
+    print("Speed: " +str(round(player_1_speed, 1)))    
+    print("Damage: " +str(player_1_damage))
+    
+    print("")    
+    print("Player 2:")    
+    print("") 
+    
+    print("Hp: " +str(round(player_2_health, 1)))    
+    print("Speed: " +str(round(player_2_speed, 1)))    
+    print("Damage: " +str(player_2_damage))
+    
+    print("")
+    print("Players Mp:")
+    print("")
+    
+    #This code below makes it so you cannot go over the MP max
+    #This code also shows players magic point amounts at the end of each round 
+    
+    if player_1 == "Pawnbroker":
+        if player_1_mp >= 180:
+            print("Player 1 hit the MP  your cap, your MP will be set to the cap: 180")
+            player_1_mp = 180
+            print("")
+        else:
+            print("Player 1's MP: " +str(player_1_mp))
+    elif player_1_mp >= 130:
+        print("Player 1 hit the MP cap, your MP will be set to the cap: 130")
+        player_1_mp = 130
+        print("")
+    else:
+        print("Player 1's MP: " +str(player_1_mp))
+        
+    if player_2 == "Pawnbroker":
+        if player_2_mp >= 180:
+            print("Player 2 hit the MP  your cap, your MP will be set to the cap: 180")
+            player_2_mp = 180
+            print("")
+        else:
+            print("Player 2's MP: " +str(player_2_mp))    
+    elif player_2_mp >= 130:
+        print("Player 2 hit the MP cap, your MP will be set to the cap: 130")
+        player_2_mp = 130
+        print("")
+    else:
+        print("Player 2's MP: " +str(player_2_mp))
+    
+    print("")
+    print("----------------------------------------")
+    print("")
+    
+    #Players Items
+    print("Players Items")
+    print("")
+    print("Player 1's item: " +(player_1_item))
+    print("")
+    print("Player 2's item: " +(player_2_item))
+    
+    #Pet Food amount
+    if Pets_enable == "Yes":
+        print("")
+        print("----------------------------------------")
+        print("")
+        print("Players pet food amounts:")
+        print("")
+        print("Player 1's pet food amount: " +str(player_1_pet_food))
+        print("Player 2's pet food amount: " +str(player_2_pet_food))
+        print("")
+        
+    #Add Pet stats
+    if player_1_pet != "":
+        print("Player 1's pet stats:")
+        print("")
+        print("Health: " +str(player_1_pet_health))
+        print("Damage: " +str(player_1_pet_damage))
+        print("")
+    if player_2_pet != "":
+        print("Player 2's pet stats:")
+        print("")
+        print("Health: " +str(player_2_pet_health))
+        print("Damage: " +str(player_2_pet_damage))
+        print("")
+    
+    #This is to increase rock round counter
+    if player_1_item == "Rock":
+        rrc1 = rrc1 + 1
+    if player_2_item == "Rock":
+        rrc2 = rrc2 + 1
+    
+    shop = random.randint(1,2)
+    
+    #player 1 shop
+    if player_1_item == "" and shop == 1:
+        print("----------------------------------------")
+        print("")
+        print("Welcome to the traveling shop Player 1!")
+        print("Would you like to buy an item?")
+        print("")
+        print("-Magical Boots (110MP)")
+        print("-Sword (40MP)")
+        print("-Health (7MP)")
+        print("-Speed (7MP)")
+        print("-Rock (15MP)")
+        if Pets_enable == "Yes":
+            print("-Pet Food (10MP)")
+            print("-Water Bucket (20MP)")
+        print("-Nothing")
+        print("")
+        
+        p1_shop = input("")
+            
+        if p1_shop == "Magical Boots":
+            if player_1_mp >= 110:
+                player_1_item = "Magical Boots"
+                player_1_mp = player_1_mp - 110
+                print("You now have Magical Boots!")
+            else:
+                print("You cannot aford this!")
+        elif p1_shop == "Sword":
+            if player_1_mp >= 40:
+                player_1_item = "Sword"
+                player_1_mp = player_1_mp - 40
+                player_1_damage = player_1_damage * 1.15
+                print("You now have a Sword!")
+            else:
+                print("You cannot aford this!")
+        elif p1_shop == "Health":
+            if player_1_mp >= 7:
+                print("You gained 10 health!")
+                player_1_mp = player_1_mp - 7
+                player_1_health = player_1_health + 10
+            else:
+                print("You cannot aford this!")
+        elif p1_shop == "Speed":
+            if player_1_mp >= 7:
+                player_1_speed = player_1_speed + 8
+                player_1_mp = player_1_mp - 7
+                print("You gained 8 speed!")
+            else:
+                print("You cannot aford this!")
+        elif p1_shop == "Rock":
+            if player_1_mp >= 15:
+                player_1_item = "Rock"
+                player_1_mp = player_1_mp - 15
+                print("You now have a rock!")
+            else:
+                print("You cannot aford this!")
+        elif p1_shop == "Pet Food" and Pets_enable == "Yes":
+            if player_1_mp >= 10:
+                player_1_mp = player_1_mp - 10
+                print("You gained 15 pet food!")
+                player_1_pet_food = player_1_pet_food + 15
+            else:
+                print("You cannot aford this!")
+        
+        elif p1_shop == "Water Bucket" and Pets_enable == "Yes":
+            if player_1_mp >= 20:
+                player_1_item = "Water Bucket"
+                player_1_mp = player_1_mp - 20
+                print("You now have a Water Bucket!")
+            else:
+                print("You cannot aford this!")
+        
+        print("")
+        print("----------------------------------------")
+        print("")
+
+    #player 2 shop        
+    if player_2_item == "" and shop == 1:
+        print("Welcome to the traveling shop Player 2!")
+        print("Would you like to buy an item?")
+        print("")
+        print("-Magical Boots (110MP)")
+        print("-Sword (40MP)")
+        print("-Health (7MP)")
+        print("-Speed (7MP)")
+        print("-Rock (15MP)")
+        if Pets_enable == "Yes":
+            print("-Pet Food (10MP)")
+            print("-Water Bucket (20MP)")
+        print("-Nothing")
+        print("")
+        
+        p2_shop = input("")
+        
+        if p2_shop == "Magical Boots":
+            if player_2_mp >= 110:
+                player_2_item = "Magical Boots"
+                player_2_mp = player_2_mp - 110
+                print("You now have Magical Boots!")
+            else:
+                print("You cannot aford this!")
+        elif p2_shop == "Pet Food" and Pets_enable == "Yes":
+            if player_2_mp >= 10:
+                player_2_mp = player_2_mp - 10
+                player_2_pet_food = player_2_pet_food + 15
+                print("You gained 15 pet food!")
+            else:
+                print("You cannot aford this!")
+        elif p2_shop == "Sword":
+            if player_2_mp >= 40:
+                player_2_item = "Sword"
+                player_2_mp = player_2_mp - 40
+                player_2_damage = player_2_damage * 1.15
+                print("You now have a Sword!")
+            else:
+                print("You cannot aford this!")
+        elif p2_shop == "Health":
+            if player_2_mp >= 7:
+                print("You gained 10 health!")
+                player_2_health = player_2_health + 10
+                player_2_mp = player_2_mp - 7
+            else:
+                print("You cannot aford this!")
+        elif p2_shop == "Speed":
+            if player_2_speed >= 7:
+                player_2_speed = player_2_speed + 8
+                print("You gained 8 speed!")
+                player_2_mp = player_2_mp - 7
+            else:
+                print("You cannot aford this!")
+        elif p2_shop == "Rock":
+            if player_2_mp >= 15:
+                player_2_item = "Rock"
+                player_2_mp = player_2_mp - 15
+                print("You now have a rock!")
+            else:
+                print("You cannot aford this!")
+        elif p2_shop == "Water Bucket" and Pets_enable == "Yes":
+            if player_2_mp >= 20:
+                player_2_item = "Water Bucket"
+                player_2_mp = player_2_mp - 20
+                print("You now have a Water Bucket!")
+            else:
+                print("You cannot aford this!")
+        
+        #Pet Shop for player 1
+        pets_flip = random.randint(1,2)
+        if pets_flip == 2 and Pets_enable == "Yes" and player_1_pet == "":
+            print("")
+            print("----------------------------------------")
+            print("")
+            p1pc = input("Welcome to the pet shop! Would you like to buy a pet Player 1?(Yes/No): ")
+            if p1pc == "Yes":
+                print("")
+                print("These are your options: ")
+                print("")
+                print("-Rat (100MP)")
+                print("-Dog (90MP)")
+                print("-Cow (100MP)")
+                print("-Fire Dragon (130MP)")
+                print("-No Pet")
+                print("")
+                
+                p1pc = input("") 
+                if p1pc == "Rat" or "Dog" or "Fire Dragon" or "Cow":
+                    if player_1_mp <= 89:
+                        print("")
+                        print("You cannot aford a pet, maybe next round!")
+                    else:   
+                        print("")
+                        print("You now own a " +(p1pc))
+                        player_1_pet = p1pc
+                        if p1pc == "Rat":
+                            if player_1_mp >= 100:
+                                player_1_mp = player_1_mp - 100
+                                player_1_pet_health = rat_hp
+                                player_1_pet_damage = rat_damage
+                            else:
+                                print("You cannot aford the rat!")
+                                player_1_pet = ""
+                        elif p1pc == "Dog":
+                            if player_1_mp >= 90:
+                                player_1_mp = player_1_mp - 90
+                                player_1_pet_health = dog_hp
+                                player_1_pet_damage = dog_damage
+                            else:
+                                print("You cannot aford the Dog!")
+                                player_1_pet = ""
+                        elif p1pc == "Fire Dragon":
+                            if player_1_mp >= 130:
+                                player_1_mp = player_1_mp - 130
+                                player_1_pet_health = fire_dragon_hp
+                                player_1_pet_damage = fire_dragon_damage
+                            else:
+                                print("You cannot aford the Fire Dragon!")
+                                player_1_pet = ""
+                        elif p1pc == "Cow":
+                            if player_1_mp >= 100:
+                                player_1_mp = player_1_mp - 100
+                                player_1_pet_health = cow_hp
+                                player_1_pet_damage = cow_damage
+                            else:
+                                print("You cannot aford the Cow")
+                                player_1_pet = ""
+                        else:
+                            player_1_pet = ""
+                    
+        if player_1_pet != "":
+            print("Player 1's pet stats:")
+            print("")
+            print("Health: " +str(player_1_pet_health))
+            print("Damage: " +str(player_1_pet_damage))
+            print("")
+  
+        #pet shop for player 2
+        if pets_flip == 2 and Pets_enable == "Yes" and player_2_pet == "":
+            print("")
+            print("----------------------------------------")
+            print("")
+            p2pc = input("Welcome to the pet shop! Would you like to buy a pet Player 2?(Yes/No): ")
+            if p2pc == "Yes":
+                print("")
+                print("These are your options:")
+                print("")
+                print("-Rat (100MP)")
+                print("-Dog (90MP)")
+                print("-Cow (100MP)")
+                print("-Fire Dragon (130MP)")
+                print("No Pet")
+                print("")
+                
+                p2pc = input("")
+                if p2pc == "Rat" or "Dog" or "Fire Dragon" or "Cow":
+                    if player_2_mp <= 89:
+                        print("You cannot aford a pet, maybe next round!")
+                    else:
+                        print("")
+                        print("You now own a " +(p2pc))
+                        player_2_pet = p2pc
+                        if p2pc == "Rat":
+                            if player_2_mp >= 100:
+                                player_2_mp = player_2_mp - 100
+                                player_2_pet_health = rat_hp
+                                player_2_pet_damage = rat_damage
+                            else:
+                                print("You cannot aford the Rat!") 
+                                player_2_pet = ""
+                        elif p2pc == "Dog":
+                            if player_2_mp >= 90:    
+                                player_2_mp = player_2_mp - 90
+                                player_2_pet_health = dog_hp
+                                player_2_pet_damage = dog_damage
+                            else:
+                                print("You cannot aford the Dog!") 
+                                player_2_pet = ""
+                        elif p2pc == "Fire Dragon":
+                            if player_2_mp >= 130:    
+                                player_2_mp = player_2_mp - 130
+                                player_2_pet_health = fire_dragon_hp
+                                player_2_pet_damage = fire_dragon_damage
+                            else:
+                                print("You cannot aford the Fire Dragon!")
+                                player_2_pet = ""
+                        elif p2pc == "Cow":
+                            if player_2_mp >= 100:    
+                                player_2_mp = player_2_mp - 100
+                                player_2_pet_health = cow_hp
+                                player_2_pet_damage = cow_damage
+                            else:
+                                print("You cannot aford the Cow!")
+                                player_2_pet = ""
+                        else:
+                            player_2_pet = ""
+        
+        if player_2_pet != "":
+            print("Player 2's pet stats:")
+            print("")
+            print("Health: " +str(player_2_pet_health))
+            print("Damage: " +str(player_2_pet_damage))
+            print("")
+
+    print("")
+    print("----------------------------------------")
+    print("")
+   
+    round_number = round_number + 1
+    
+    print("You are now on round " +str(round_number))
+    
+    print("")
+    print("----------------------------------------")
+    print("")
+    
+    #Makes it so you can't go into negative speed
+    if player_1_speed < 0:
+        player_1_speed = 0
+    if player_2_speed < 0:
+        player_2_speed = 0
+        
+    #gain speed at the end of each round
+    player_1_speed = player_1_speed + 2
+    player_2_speed = player_2_speed + 2
+    
+    #pet food max code
+    if player_1_pet_food > 60:
+        player_1_pet_food = 60
+    if player_2_pet_food > 60:
+        player_2_pet_food = 60
+        
+#Tkinter Grapgics import Loop
+mainloop()
